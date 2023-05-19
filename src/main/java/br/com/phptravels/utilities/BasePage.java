@@ -1,6 +1,5 @@
 package br.com.phptravels.utilities;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +15,9 @@ public class BasePage {
 
 	/********* TextField e TextArea ************/
 
-	public void escrever(By by, String texto) {
-		WebDriverManager.getDriver().findElement(by).clear();
-		WebDriverManager.getDriver().findElement(by).sendKeys(texto);
-	}
-
-	public void escrever(String id_campo, String texto) {
-		escrever(By.id(id_campo), texto);
+	public void escrever(WebElement elemento, String texto) {
+		elemento.clear();
+		elemento.sendKeys(texto);
 	}
 
 	public String obterValorCampo(String id_campo) {
@@ -45,9 +40,9 @@ public class BasePage {
 
 	public void clicarCheck(By by) {
 
-	WebDriverManager.getDriver().findElement(by).click();
+		WebDriverManager.getDriver().findElement(by).click();
 	}
-	
+
 	public void clicarCheck(String id) {
 		WebDriverManager.getDriver().findElement(By.id(id)).click();
 	}
@@ -61,7 +56,7 @@ public class BasePage {
 	public void selecionar(By by, String valor) {
 		WebElement elemento = WebDriverManager.getDriver().findElement(by);
 		Select selecao = new Select(elemento);
-selecao.selectByVisibleText(valor);
+		selecao.selectByVisibleText(valor);
 	}
 
 	/********* Combo ************/
@@ -185,7 +180,8 @@ selecao.selectByVisibleText(valor);
 	}
 
 	public void trocarJanela(int numeroJanela) {
-		WebDriverManager.getDriver().switchTo().window((String) WebDriverManager.getDriver().getWindowHandles().toArray()[numeroJanela]);
+		WebDriverManager.getDriver().switchTo()
+				.window((String) WebDriverManager.getDriver().getWindowHandles().toArray()[numeroJanela]);
 	}
 
 	/************** JS *********************/

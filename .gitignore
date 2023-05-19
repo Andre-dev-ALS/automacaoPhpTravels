@@ -27,8 +27,8 @@
 /.metadata/
 /.settings/
 /bin/
-/src/evidencias/
-/src/evidencia/
+./src/evidencias/
+./src/evidencia/
 /src/relatórios
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
