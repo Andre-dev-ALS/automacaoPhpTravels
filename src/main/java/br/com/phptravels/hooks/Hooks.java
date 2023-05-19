@@ -11,13 +11,11 @@ import org.openqa.selenium.TakesScreenshot;
 
 import br.com.phptravels.managers.WebDriverManager;
 import br.com.phptravels.utilities.Context;
-import br.com.phptravels.utilities.ExcelActions;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 
 public class Hooks {
-	ExcelActions excel;
 
 	@Before
 	public void inicializar(Scenario cenario) {
@@ -44,6 +42,6 @@ public class Hooks {
 		}
 
 		Context.limparId();
-		WebDriverManager.closeDriver();
+		// WebDriverManager.closeDriver();
 	}
 }

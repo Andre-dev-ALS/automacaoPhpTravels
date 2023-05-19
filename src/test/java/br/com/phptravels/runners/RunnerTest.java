@@ -8,21 +8,12 @@ import io.cucumber.junit.CucumberOptions.SnippetType;
 
 @CucumberOptions(
 
-		features = {
-				"src/test/resources/feature/demonstraçãoSite.feature" },
+		features = { "src/test/resources/feature/demonstracaoSite.feature" },
 
-		glue = { 
-				"br.com.phptravels.steps", 
-		"br.com.phptravels.hooks"
-		},
-				plugin =  {"pretty", 
-						"html:relatórios/cucumber-reports",},
-		snippets = SnippetType.CAMELCASE,
-		monochrome = true,
-		dryRun = false,
-		strict = false
+		glue = { "br.com.phptravels.steps", "br.com.phptravels.hooks" }, plugin = { "pretty",
+				"html:relatórios/cucumber-reports", }, snippets = SnippetType.CAMELCASE, monochrome = true, dryRun = false, strict = true
 
-		)
+)
 
 @RunWith(Cucumber.class)
 public class RunnerTest {

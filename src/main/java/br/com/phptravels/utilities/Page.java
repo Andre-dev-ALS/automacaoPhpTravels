@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import br.com.phptravels.managers.WebDriverManager;
 
-public class BasePage {
+public class Page {
 
 	/********* TextField e TextArea ************/
 

@@ -1,10 +1,9 @@
 package br.com.phptravels.utilities;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -19,16 +18,15 @@ public class ExcelActions {
 	private String nomeDaPlanilha = "";
 
 	public void setArquivoExcel(String nomeDaPlanilha) {
-		File arquivo = new File(FileReaderManager.getInstance().getConfigReader().getExcelPath());
-		FileInputStream planilha = null;
+//		try {
+//			planilha = new FileInputStream(arquivo);
+//		} catch (FileNotFoundException e) {
+//			System.out.println("Arquivo não encontrada.");
+//		}
 		try {
-			planilha = new FileInputStream(arquivo);
-		} catch (FileNotFoundException e) {
-			System.out.println("Arquivo não encontrada.");
-		}
-		try {
-			pastaDeTrabalho = new XSSFWorkbook(planilha);
-		} catch (IOException e) {
+			File arquivo = new File(FileReaderManager.getInstance().getConfigReader().getExcelPath());
+			pastaDeTrabalho = new XSSFWorkbook(arquivo);
+		} catch (IOException | InvalidFormatException e) {
 			System.out.println("pasta de trabalho não encontrada.");
 			e.printStackTrace();
 		}
