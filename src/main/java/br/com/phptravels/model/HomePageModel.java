@@ -24,7 +24,7 @@ public class HomePageModel {
 		return nome;
 	}
 
-	public void setNome() {
+	private void setNome() {
 		nome = excel.buscarValorNaPlanilha("dadosPessoais", Context.getId(), "nome");
 	}
 
@@ -32,7 +32,7 @@ public class HomePageModel {
 		return sobreNome;
 	}
 
-	public void setSobreNome() {
+	private void setSobreNome() {
 		sobreNome = excel.buscarValorNaPlanilha("dadosPessoais", Context.getId(), "sobrenome");
 	}
 
@@ -40,7 +40,7 @@ public class HomePageModel {
 		return nomeDaEmpresa;
 	}
 
-	public void setNomeDaEmpresa() {
+	private void setNomeDaEmpresa() {
 		nomeDaEmpresa = excel.buscarValorNaPlanilha("dadosPessoais", Context.getId(), "nomeDaEmpresa");
 	}
 
@@ -48,7 +48,7 @@ public class HomePageModel {
 		return email;
 	}
 
-	public void setEmail() {
+	private void setEmail() {
 		email = excel.buscarValorNaPlanilha("dadosPessoais", Context.getId(), "email");
 	}
 

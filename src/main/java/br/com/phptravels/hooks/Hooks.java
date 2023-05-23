@@ -42,6 +42,6 @@ public class Hooks {
 		}
 
 		Context.limparId();
-		// WebDriverManager.closeDriver();
+		WebDriverManager.closeDriver();
 	}
 }

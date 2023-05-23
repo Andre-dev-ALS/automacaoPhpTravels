@@ -3,10 +3,13 @@ package br.com.phptravels.utilities;
 import java.io.File;
 import java.io.IOException;
 
+import javax.management.RuntimeErrorException;
+
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.InvalidArgumentException;
 
 import br.com.phptravels.managers.FileReaderManager;
 
@@ -18,11 +21,6 @@ public class ExcelActions {
 	private String nomeDaPlanilha = "";
 
 	public void setArquivoExcel(String nomeDaPlanilha) {
-//		try {
-//			planilha = new FileInputStream(arquivo);
-//		} catch (FileNotFoundException e) {
-//			System.out.println("Arquivo não encontrada.");
-//		}
 		try {
 			File arquivo = new File(FileReaderManager.getInstance().getConfigReader().getExcelPath());
 			pastaDeTrabalho = new XSSFWorkbook(arquivo);
@@ -31,21 +29,26 @@ public class ExcelActions {
 			e.printStackTrace();
 		}
 		folha = pastaDeTrabalho.getSheet(nomeDaPlanilha);
+		try {
+			pastaDeTrabalho.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("erro ao fechar o excel");
+		}
+
 	}
 
 	public int encontrarColuna(String nomeDaColuna) throws RuntimeException {
-
-		int indiceColuna = 0;
 		setArquivoExcel(nomeDaPlanilha);
 		int cellcount = folha.getRow(0).getLastCellNum();
-		for (; indiceColuna < cellcount; indiceColuna++) {
-			if (getValorDaCelulaDoArquivo(0, indiceColuna).equalsIgnoreCase(nomeDaColuna)) {
+		for (int indiceColuna = 0; indiceColuna < cellcount; indiceColuna++) {
+			String atributo = getValorDaCelulaDoArquivo(0, indiceColuna);
+			if (atributo.equalsIgnoreCase(nomeDaColuna)) {
 				return indiceColuna;
 			}
-
 		}
-
-		throw new RuntimeException("coluna não encontrada");
+		// throw new RuntimeException("coluna não encontrada");
+		throw new InvalidArgumentException("coluna não encontrada");
 	}
 
 	public String getValorDaCelulaDoArquivo(int iNumeroDaLinha, int iNumeroDaCelula) {
@@ -68,18 +71,21 @@ public class ExcelActions {
 		return "esta célula está vazia";
 	}
 
-	public String buscarValorNaPlanilha(String nomeDaPlanilha, String id, String nomeDaColuna) {
+	public String buscarValorNaPlanilha(String nomeDaPlanilha, String id, String nomeDaColuna)
+			throws RuntimeErrorException {
 		this.nomeDaPlanilha = nomeDaPlanilha;
 		setArquivoExcel(this.nomeDaPlanilha);
+		int col = encontrarColuna(nomeDaColuna);
 		String dadoProcurado = id;
 		String dadoEncontrado = "";
 		int indiceId = 0;
-		for (; indiceId < getTotalLinhasFolha(); indiceId++) {
-			if (getValorDaCelulaDoArquivo(indiceId, 0).equalsIgnoreCase(dadoProcurado)) {
-				dadoEncontrado = getValorDaCelulaDoArquivo(indiceId, encontrarColuna(nomeDaColuna));
+		for (; indiceId <= getTotalLinhasFolha(); indiceId++) {
+			dadoEncontrado = getValorDaCelulaDoArquivo(indiceId, 0);
+			if (dadoEncontrado.equalsIgnoreCase(dadoProcurado)) {
+				return getValorDaCelulaDoArquivo(indiceId, col);
 			}
 		}
-		return dadoEncontrado;
+		throw new RuntimeException("célula nao encontrada");
 	}
 
 	public int getTotalLinhasFolha() {
