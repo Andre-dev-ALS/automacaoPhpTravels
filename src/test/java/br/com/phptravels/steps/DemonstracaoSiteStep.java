@@ -11,6 +11,7 @@ public class DemonstracaoSiteStep {
 
 	@Dado("que estou na página inicial")
 	public void que_estou_na_página_inicial() {
+
 		PageObjectManager.getHomePage().navegarParaPaginaInicial();
 	}
 

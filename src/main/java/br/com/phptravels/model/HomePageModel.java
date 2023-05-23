@@ -25,7 +25,7 @@ public class HomePageModel {
 	}
 
 	private void setNome() {
-		nome = excel.buscarValorNaPlanilha("dadosPessoais", Context.getId(), "nome");
+		nome = setAtributo("nome");
 	}
 
 	public String getSobreNome() {
@@ -33,7 +33,7 @@ public class HomePageModel {
 	}
 
 	private void setSobreNome() {
-		sobreNome = excel.buscarValorNaPlanilha("dadosPessoais", Context.getId(), "sobrenome");
+		sobreNome = setAtributo("sobrenome");
 	}
 
 	public String getNomeDaEmpresa() {
@@ -41,7 +41,7 @@ public class HomePageModel {
 	}
 
 	private void setNomeDaEmpresa() {
-		nomeDaEmpresa = excel.buscarValorNaPlanilha("dadosPessoais", Context.getId(), "nomeDaEmpresa");
+		nomeDaEmpresa = setAtributo("nomeDaEmpresa");
 	}
 
 	public String getEmail() {
@@ -49,7 +49,12 @@ public class HomePageModel {
 	}
 
 	private void setEmail() {
-		email = excel.buscarValorNaPlanilha("dadosPessoais", Context.getId(), "email");
+		email = setAtributo("email");
+	}
+
+	private String setAtributo(String atributo) {
+		return excel.buscarValorNaPlanilha("dadosPessoais", Context.getId(), atributo);
+
 	}
 
 }
