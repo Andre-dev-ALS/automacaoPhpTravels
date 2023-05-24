@@ -116,17 +116,8 @@ public class Page {
 
 	/********* Botao ************/
 
-	public void clicarBotao(By by) {
-		WebDriverManager.getDriver().findElement(by).click();
-	}
-
-	public void clicarBotao(String id) {
-		clicarBotao(By.id(id));
-	}
-
-	public void clicarBotaoPorTexto(String texto) {
-		WebDriverManager.getDriver().findElement(By.xpath("//button[.= '" + texto + "']")).click();
-
+	public void clicarBotao(WebElement elemento) {
+		elemento.click();
 	}
 
 	public String obterValueElemento(String id) {
