@@ -67,7 +67,8 @@ public class ExcelActions {
 		return "esta célula está vazia";
 	}
 
-	public String buscarValorNaPlanilha(String nomeDaPlanilha, String id, String nomeDaColuna) {
+	public String buscarValorNaPlanilha(String nomeDaPlanilha, String id, String nomeDaColuna)
+			throws NullArgumentException {
 		this.nomeDaPlanilha = nomeDaPlanilha;
 		setArquivoExcel(this.nomeDaPlanilha);
 		int col = encontrarColuna(nomeDaColuna);
@@ -80,7 +81,7 @@ public class ExcelActions {
 				return getValorDaCelulaDoArquivo(indiceId, col);
 			}
 		}
-		throw new NullArgumentException(null, "dado não encontrado");
+		throw new NullArgumentException();
 	}
 
 	public int getTotalLinhasFolha() {

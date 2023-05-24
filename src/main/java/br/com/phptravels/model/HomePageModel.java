@@ -1,5 +1,7 @@
 package br.com.phptravels.model;
 
+import br.com.phptravels.enums.Colunas;
+import br.com.phptravels.enums.Planilhas;
 import br.com.phptravels.utilities.Context;
 import br.com.phptravels.utilities.ExcelActions;
 
@@ -13,7 +15,6 @@ public class HomePageModel {
 	public HomePageModel() {
 
 		excel = new ExcelActions();
-
 		setNome();
 		setSobreNome();
 		setNomeDaEmpresa();
@@ -25,7 +26,7 @@ public class HomePageModel {
 	}
 
 	private void setNome() {
-		nome = setAtributo("nome");
+		nome = setAtributo(Colunas.NOME.getValor());
 	}
 
 	public String getSobreNome() {
@@ -33,7 +34,7 @@ public class HomePageModel {
 	}
 
 	private void setSobreNome() {
-		sobreNome = setAtributo("sobrenome");
+		sobreNome = setAtributo(Colunas.SOBRENOME.getValor());
 	}
 
 	public String getNomeDaEmpresa() {
@@ -41,7 +42,7 @@ public class HomePageModel {
 	}
 
 	private void setNomeDaEmpresa() {
-		nomeDaEmpresa = setAtributo("nomeDaEmpresa");
+		nomeDaEmpresa = setAtributo(Colunas.NOME_DA_EMPRESA.getValor());
 	}
 
 	public String getEmail() {
@@ -49,11 +50,11 @@ public class HomePageModel {
 	}
 
 	private void setEmail() {
-		email = setAtributo("email");
+		email = setAtributo(Colunas.EMAIL.getValor());
 	}
 
-	private String setAtributo(String atributo) {
-		return excel.buscarValorNaPlanilha("dadosPessoais", Context.getId(), atributo);
+	private String setAtributo(String coluna) {
+		return excel.buscarValorNaPlanilha(Planilhas.DADOS_PESSOAIS.getValor(), Context.getId(), coluna);
 
 	}
 

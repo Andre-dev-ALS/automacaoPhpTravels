@@ -35,8 +35,8 @@ public class Hooks {
 		}
 		try {
 			String pastaImagens = new File("").getAbsolutePath() + "/evidencias/";
-			FileUtils.copyFile(imagens,
-					new File(pastaImagens + scenario.getName() + "-" + data + "-" + mensagem + ".png"));
+			FileUtils.copyFile(imagens, new File(
+					pastaImagens + Context.getId() + scenario.getName() + "-" + data + "-" + mensagem + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
