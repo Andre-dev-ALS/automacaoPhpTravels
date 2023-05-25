@@ -11,71 +11,51 @@ import org.openqa.selenium.support.ui.Select;
 
 import br.com.phptravels.managers.WebDriverManager;
 
-public class Page {
+public class Dsl {
 
 	/********* TextField e TextArea ************/
 
 	public void escrever(WebElement elemento, String texto) {
+		Espera.esperarElementoSerVisivel(elemento);
 		elemento.clear();
 		elemento.sendKeys(texto);
 	}
 
-	public String obterValorCampo(String id_campo) {
-		return WebDriverManager.getDriver().findElement(By.id(id_campo)).getAttribute("value");
-	}
-
 	/********* Radio e Check ************/
 
-	public void clicarRadio(By by) {
-		WebDriverManager.getDriver().findElement(by).click();
+	public void clicarRadio(WebElement elemento) {
+		Espera.esperarBotaoSerClicado(elemento);
+		elemento.click();
 	}
 
-	public void clicarRadio(String id) {
-		clicarRadio(By.id(id));
-	}
-
-	public boolean isRadioMarcado(String id) {
-		return WebDriverManager.getDriver().findElement(By.id(id)).isSelected();
-	}
-
-	public void clicarCheck(By by) {
-
-		WebDriverManager.getDriver().findElement(by).click();
-	}
-
-	public void clicarCheck(String id) {
-		WebDriverManager.getDriver().findElement(By.id(id)).click();
-	}
-
-	public boolean isCheckMarcado(String id) {
-		return WebDriverManager.getDriver().findElement(By.id(id)).isSelected();
+	public void clicarCheck(WebElement elemento) {
+		Espera.esperarBotaoSerClicado(elemento);
+		elemento.click();
 	}
 
 // caixa de seleção 
 
-	public void selecionar(By by, String valor) {
-		WebElement elemento = WebDriverManager.getDriver().findElement(by);
+	public void selecionar(WebElement elemento, String valor) {
+		Espera.esperarElementoSerVisivel(elemento);
 		Select selecao = new Select(elemento);
 		selecao.selectByVisibleText(valor);
 	}
 
 	/********* Combo ************/
 
-	public void selecionarCombo(String id, String valor) {
-		WebElement element = WebDriverManager.getDriver().findElement(By.id(id));
-		Select combo = new Select(element);
+	public void selecionarCombo(WebElement elemento, String valor) {
+		Espera.esperarElementoSerVisivel(elemento);
+		Select combo = new Select(elemento);
 		combo.selectByVisibleText(valor);
 	}
 
-	public void deselecionarCombo(String id, String valor) {
-		WebElement element = WebDriverManager.getDriver().findElement(By.id(id));
-		Select combo = new Select(element);
+	public void deselecionarCombo(WebElement elemento, String valor) {
+		Select combo = new Select(elemento);
 		combo.deselectByVisibleText(valor);
 	}
 
-	public String obterValorCombo(String id) {
-		WebElement element = WebDriverManager.getDriver().findElement(By.id(id));
-		Select combo = new Select(element);
+	public String obterValorCombo(WebElement elemento) {
+		Select combo = new Select(elemento);
 		return combo.getFirstSelectedOption().getText();
 	}
 
@@ -90,16 +70,14 @@ public class Page {
 		return valores;
 	}
 
-	public int obterQuantidadeOpcoesCombo(String id) {
-		WebElement element = WebDriverManager.getDriver().findElement(By.id(id));
-		Select combo = new Select(element);
+	public int obterQuantidadeOpcoesCombo(WebElement elemento) {
+		Select combo = new Select(elemento);
 		List<WebElement> options = combo.getOptions();
 		return options.size();
 	}
 
-	public boolean verificarOpcaoCombo(String id, String opcao) {
-		WebElement element = WebDriverManager.getDriver().findElement(By.id(id));
-		Select combo = new Select(element);
+	public boolean verificarOpcaoCombo(WebElement elemento, String opcao) {
+		Select combo = new Select(elemento);
 		List<WebElement> options = combo.getOptions();
 		for (WebElement option : options) {
 			if (option.getText().equals(opcao)) {
@@ -109,19 +87,15 @@ public class Page {
 		return false;
 	}
 
-	public void selecionarComboPrime(String radical, String valor) {
-		clicarRadio(By.xpath("//*[@id='" + radical + "_input']/../..//span"));
-		clicarRadio(By.xpath("//*[@id='" + radical + "_items']//li[.='" + valor + "']"));
-	}
-
 	/********* Botao ************/
 
 	public void clicarBotao(WebElement elemento) {
+		Espera.esperarBotaoSerClicado(elemento);
 		elemento.click();
 	}
 
-	public String obterValueElemento(String id) {
-		return WebDriverManager.getDriver().findElement(By.id(id)).getAttribute("value");
+	public String obterValueElemento(WebElement elemento) {
+		return elemento.getAttribute("value");
 	}
 
 	/********* Link ************/
@@ -130,43 +104,36 @@ public class Page {
 		WebDriverManager.getDriver().findElement(By.linkText(link)).click();
 	}
 
-	/********* Textos ************/
-
-	public String obterTexto(By by) {
-		return WebDriverManager.getDriver().findElement(by).getText();
-	}
-
-	public String obterTexto(String id) {
-		return obterTexto(By.id(id));
-	}
-
 	/********* Alerts ************/
 
 	public String alertaObterTexto() {
+		Espera.esperarAlertaAparecer();
+
 		Alert alert = WebDriverManager.getDriver().switchTo().alert();
 		return alert.getText();
 	}
 
 	public String alertaObterTextoEAceita() {
+		Espera.esperarAlertaAparecer();
+
 		Alert alert = WebDriverManager.getDriver().switchTo().alert();
 		String valor = alert.getText();
 		alert.accept();
 		return valor;
-
 	}
 
 	public String alertaObterTextoENega() {
+		Espera.esperarAlertaAparecer();
 		Alert alert = WebDriverManager.getDriver().switchTo().alert();
 		String valor = alert.getText();
 		alert.dismiss();
-
 		return valor;
-
 	}
 
-	public void alertaEscrever(String valor) {
+	public void alertaEscrever(String texto) {
+		Espera.esperarAlertaAparecer();
 		Alert alert = WebDriverManager.getDriver().switchTo().alert();
-		alert.sendKeys(valor);
+		alert.sendKeys(texto);
 		alert.accept();
 	}
 

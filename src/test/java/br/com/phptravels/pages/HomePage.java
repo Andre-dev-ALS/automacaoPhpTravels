@@ -8,35 +8,35 @@ import org.openqa.selenium.support.PageFactory;
 import br.com.phptravels.managers.FileReaderManager;
 import br.com.phptravels.managers.WebDriverManager;
 import br.com.phptravels.utilities.Espera;
-import br.com.phptravels.utilities.Page;
+import br.com.phptravels.utilities.Dsl;
 
-public class HomePage extends Page {
+public class HomePage extends Dsl {
 	@FindBy(xpath = "//input[@name='first_name' and @placeholder='First Name']")
-	WebElement txtNome;
+	private WebElement txtNome;
 
 	@FindBy(xpath = "//input[@name='last_name' and @placeholder='Last Name']")
-	WebElement txtSobreNome;
+	private WebElement txtSobreNome;
 
 	@FindBy(xpath = "//input[@name='business_name' and @placeholder='Business Name']")
-	WebElement txtNomeDaEmpresa;
+	private WebElement txtNomeDaEmpresa;
 
 	@FindBy(xpath = "//input[@name='email' and @placeholder='Email']")
-	WebElement txtEmail;
+	private WebElement txtEmail;
 
 	@FindBy(id = "demo")
-	WebElement btmEnviar;
+	private WebElement btmEnviar;
 
 	@FindBy(id = "numb1")
-	WebElement tempValor1;
+	private WebElement tempValor1;
 
 	@FindBy(id = "numb2")
-	WebElement tempValor2;
+	private WebElement tempValor2;
 
 	@FindBy(id = "number")
-	WebElement txtResultado;
+	private WebElement txtResultado;
 
-	@FindBy(className = "text-center cw")
-	WebElement lblMensagemBemSucedida;
+	@FindBy(xpath = "//strong[contains(text(), 'Thank you!')]")
+	private WebElement lblMensagemBemSucedida;
 
 	public HomePage() {
 		PageFactory.initElements(WebDriverManager.getDriver(), this);
@@ -47,50 +47,35 @@ public class HomePage extends Page {
 	}
 
 	public void preencherCampoNome(String nome) {
-		Espera.esperarElemento(txtNome);
-
 		escrever(txtNome, nome);
 	}
 
 	public void preencherCampoSobrenome(String sobrenome) {
-		Espera.esperarElemento(txtSobreNome);
 		escrever(txtSobreNome, sobrenome);
 	}
 
 	public void preencherCampoNomeDaEmpresa(String nomeDaEmpresa) {
-		Espera.esperarElemento(txtNomeDaEmpresa);
 		escrever(txtNomeDaEmpresa, nomeDaEmpresa);
 	}
 
 	public void preencherCampoEmail(String email) {
-		Espera.esperarElemento(txtEmail);
 		escrever(txtEmail, email);
 	}
 
 	public void clicarBotaoEnviar() {
-		Espera.esperarElemento(btmEnviar);
 		clicarBotao(btmEnviar);
 	}
 
-	public String getValor1() {
-		return tempValor1.getText();
-	}
+	public void preencherCampoResultado() {
+		int valor1 = Integer.parseInt(tempValor1.getText());
+		int valor2 = Integer.parseInt(tempValor2.getText());
+		String resultado = Integer.toString(valor1 + valor2);
 
-	public String getValor2() {
-		return tempValor2.getText();
-	}
-
-	public void preencherCampoResultado(String resultado) {
-		Espera.esperarElemento(txtResultado);
 		escrever(txtResultado, resultado);
 	}
 
 	public void getMensagemSucesso() {
-		// Espera.esperarElemento(lblMensagemBemSucedida);
-		if (lblMensagemBemSucedida.isDisplayed()) {
-			Assert.assertTrue(true);
-		} else {
-			Assert.assertFalse(false);
-		}
+		Espera.esperarElementoSerVisivel(lblMensagemBemSucedida);
+		Assert.assertTrue(lblMensagemBemSucedida.isDisplayed());
 	}
 }

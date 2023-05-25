@@ -1,19 +1,20 @@
 package br.com.phptravels.managers;
+
 import br.com.phptravels.dataProvider.ConfigFileReader;
 
 public class FileReaderManager {
 
-	private static FileReaderManager fileReaderManager = new FileReaderManager();
-	private static ConfigFileReader configFileReader;
+	private static FileReaderManager FILE_READER_MANAGER = new FileReaderManager();
+	private static ConfigFileReader CONFIG_FILE_READER;
 
 	private FileReaderManager() {
 	}
 
-	 public static FileReaderManager getInstance( ) {
-	      return fileReaderManager;
-	 }
+	public static FileReaderManager getInstance() {
+		return FILE_READER_MANAGER;
+	}
 
-	 public ConfigFileReader getConfigReader() {
-		 return (configFileReader == null) ? new ConfigFileReader() : configFileReader;
-	 }
+	public ConfigFileReader getConfigReader() {
+		return (CONFIG_FILE_READER == null) ? new ConfigFileReader() : CONFIG_FILE_READER;
+	}
 }

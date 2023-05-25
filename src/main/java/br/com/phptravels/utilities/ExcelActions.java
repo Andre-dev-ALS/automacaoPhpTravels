@@ -14,22 +14,22 @@ import br.com.phptravels.utilities.exceptions.ArgumentoinvalidoException;
 
 public class ExcelActions {
 
-	private static XSSFWorkbook pastaDeTrabalho;
-	private static XSSFSheet folha;
-	private static XSSFCell celula;
+	private static XSSFWorkbook PASTA_DE_TRABALHO;
+	private static XSSFSheet FOLHA;
+	private static XSSFCell CELULA;
 	private String nomeDaPlanilha = "";
 
 	public void setArquivoExcel(String nomeDaPlanilha) {
 		try {
 			File arquivo = new File(FileReaderManager.getInstance().getConfigReader().getExcelPath());
-			pastaDeTrabalho = new XSSFWorkbook(arquivo);
+			PASTA_DE_TRABALHO = new XSSFWorkbook(arquivo);
 		} catch (IOException | InvalidFormatException e) {
 			System.out.println("pasta de trabalho não encontrada.");
 			e.printStackTrace();
 		}
-		folha = pastaDeTrabalho.getSheet(nomeDaPlanilha);
+		FOLHA = PASTA_DE_TRABALHO.getSheet(nomeDaPlanilha);
 		try {
-			pastaDeTrabalho.close();
+			PASTA_DE_TRABALHO.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("erro ao fechar o excel");
@@ -39,7 +39,7 @@ public class ExcelActions {
 
 	public int encontrarColuna(String nomeDaColuna) throws ArgumentoinvalidoException {
 		setArquivoExcel(nomeDaPlanilha);
-		int cellcount = folha.getRow(0).getLastCellNum();
+		int cellcount = FOLHA.getRow(0).getLastCellNum();
 		for (int indiceColuna = 0; indiceColuna < cellcount; indiceColuna++) {
 			String atributo = getValorDaCelulaDoArquivo(0, indiceColuna);
 			if (atributo.equalsIgnoreCase(nomeDaColuna)) {
@@ -52,13 +52,13 @@ public class ExcelActions {
 	public String getValorDaCelulaDoArquivo(int iNumeroDaLinha, int iNumeroDaCelula) {
 		try {
 			setArquivoExcel(nomeDaPlanilha);
-			if (folha.getRow(iNumeroDaLinha).getCell(iNumeroDaCelula) != null) {
-				celula = folha.getRow(iNumeroDaLinha).getCell(iNumeroDaCelula);
-				return celula.getStringCellValue();
+			if (FOLHA.getRow(iNumeroDaLinha).getCell(iNumeroDaCelula) != null) {
+				CELULA = FOLHA.getRow(iNumeroDaLinha).getCell(iNumeroDaCelula);
+				return CELULA.getStringCellValue();
 			}
 		} catch (Exception e) {
 			try {
-				pastaDeTrabalho.close();
+				PASTA_DE_TRABALHO.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 				System.out.println("Erro ao fechar o excel");
@@ -86,7 +86,7 @@ public class ExcelActions {
 
 	public int getTotalLinhasFolha() {
 		setArquivoExcel(nomeDaPlanilha);
-		int totalDeLinhas = folha.getLastRowNum() - folha.getFirstRowNum();
+		int totalDeLinhas = FOLHA.getLastRowNum() - FOLHA.getFirstRowNum();
 		return totalDeLinhas;
 	}
 

@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import io.cucumber.core.api.Scenario;
 
 public class Context {
-	private static String id;
+	private static String ID;
 
 	public static String getId() {
-
-	return id;
+		return ID;
 	}
 
 	public static void setId(Scenario cenario) {
@@ -18,13 +17,12 @@ public class Context {
 		ArrayList<String> ids = (ArrayList<String>) cenario.getSourceTagNames();
 		for (int i = 0; i < ids.size(); i++) {
 			idFormatado = FormatadorDeString.formatarString(ids.get(i), "@", "");
-			id = idFormatado;
+			ID = idFormatado;
 		}
 
 	}
-	
-	
+
 	public static void limparId() {
-		id = "";
+		ID = "";
 	}
 }

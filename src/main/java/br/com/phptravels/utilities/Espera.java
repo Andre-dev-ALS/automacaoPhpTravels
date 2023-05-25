@@ -9,9 +9,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import br.com.phptravels.managers.WebDriverManager;
 
 public class Espera {
-	static WebDriverWait wait;
+	private static WebDriverWait WAIT;
 
-	public static void esperarElemento(WebElement elemento) {
+	public static void esperarElementoSerVisivel(WebElement elemento) {
 
 		try {
 			WebDriverManager.getDriver().manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
@@ -21,13 +21,48 @@ public class Espera {
 		}
 
 		try {
-			wait = new WebDriverWait(WebDriverManager.getDriver(), 30);
-			wait.until(ExpectedConditions.visibilityOf(elemento));
+			WAIT = new WebDriverWait(WebDriverManager.getDriver(), 30);
+			WAIT.until(ExpectedConditions.visibilityOf(elemento));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("O elemento da página não foi encontrado");
 		}
+	}
+
+	public static void esperarAlertaAparecer() {
+		try {
+			WebDriverManager.getDriver().manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Erro ao carregar a página");
+		}
+
+		try {
+			WAIT = new WebDriverWait(WebDriverManager.getDriver(), 30);
+			WAIT.until(ExpectedConditions.alertIsPresent());
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("O alerta não está presente");
+		}
+
+	}
+
+	public static void esperarBotaoSerClicado(WebElement elemento) {
+		try {
+			WebDriverManager.getDriver().manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Erro ao carregar a página");
+		}
+
+		try {
+			WAIT = new WebDriverWait(WebDriverManager.getDriver(), 30);
+			WAIT.until(ExpectedConditions.elementToBeClickable(elemento));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("O botão não pôde ser clicado");
+		}
+
 	}
 
 }
