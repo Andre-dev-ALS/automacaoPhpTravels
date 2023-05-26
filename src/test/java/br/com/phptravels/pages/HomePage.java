@@ -1,13 +1,11 @@
 package br.com.phptravels.pages;
 
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import br.com.phptravels.managers.FileReaderManager;
 import br.com.phptravels.managers.WebDriverManager;
-import br.com.phptravels.utilities.Espera;
 import br.com.phptravels.utilities.Dsl;
 
 public class HomePage extends Dsl {
@@ -27,10 +25,10 @@ public class HomePage extends Dsl {
 	private WebElement btmEnviar;
 
 	@FindBy(id = "numb1")
-	private WebElement tempValor1;
+	private WebElement lblValor1;
 
 	@FindBy(id = "numb2")
-	private WebElement tempValor2;
+	private WebElement lblValor2;
 
 	@FindBy(id = "number")
 	private WebElement txtResultado;
@@ -46,36 +44,40 @@ public class HomePage extends Dsl {
 		WebDriverManager.getDriver().get(FileReaderManager.getInstance().getConfigReader().getApplicationUrl());
 	}
 
-	public void preencherCampoNome(String nome) {
-		escrever(txtNome, nome);
+	public WebElement getTxtNome() {
+		return txtNome;
 	}
 
-	public void preencherCampoSobrenome(String sobrenome) {
-		escrever(txtSobreNome, sobrenome);
+	public WebElement getTxtSobreNome() {
+		return txtSobreNome;
 	}
 
-	public void preencherCampoNomeDaEmpresa(String nomeDaEmpresa) {
-		escrever(txtNomeDaEmpresa, nomeDaEmpresa);
+	public WebElement getTxtNomeDaEmpresa() {
+		return txtNomeDaEmpresa;
 	}
 
-	public void preencherCampoEmail(String email) {
-		escrever(txtEmail, email);
+	public WebElement getTxtEmail() {
+		return txtEmail;
 	}
 
-	public void clicarBotaoEnviar() {
-		clicarBotao(btmEnviar);
+	public WebElement getBtmEnviar() {
+		return btmEnviar;
 	}
 
-	public void preencherCampoResultado() {
-		int valor1 = Integer.parseInt(tempValor1.getText());
-		int valor2 = Integer.parseInt(tempValor2.getText());
-		String resultado = Integer.toString(valor1 + valor2);
-
-		escrever(txtResultado, resultado);
+	public WebElement getTempValor1() {
+		return lblValor1;
 	}
 
-	public void getMensagemSucesso() {
-		Espera.esperarElementoSerVisivel(lblMensagemBemSucedida);
-		Assert.assertTrue(lblMensagemBemSucedida.isDisplayed());
+	public WebElement getTempValor2() {
+		return lblValor2;
 	}
+
+	public WebElement getTxtResultado() {
+		return txtResultado;
+	}
+
+	public WebElement getLblMensagemBemSucedida() {
+		return lblMensagemBemSucedida;
+	}
+
 }
