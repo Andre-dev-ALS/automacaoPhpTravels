@@ -1,4 +1,4 @@
-package br.com.phptravels.dataProvider;
+package br.com.phptravels.data_provider;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

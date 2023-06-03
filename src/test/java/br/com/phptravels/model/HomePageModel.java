@@ -49,7 +49,7 @@ public class HomePageModel {
 	}
 
 	private void setNome() {
-		nome = setAtributo(COLUNA_NOME_DA_EMPRESA);
+		nome = setAtributo(getColunaNome());
 	}
 
 	public String getSobreNome() {
@@ -77,7 +77,7 @@ public class HomePageModel {
 	}
 
 	private String setAtributo(String coluna) {
-		return excel.buscarValorNaPlanilha(NOME_DA_PLANILHA, Context.getId(), coluna);
+		return excel.getValueInTheWorksheet(NOME_DA_PLANILHA, Context.getId(), coluna);
 
 	}
 

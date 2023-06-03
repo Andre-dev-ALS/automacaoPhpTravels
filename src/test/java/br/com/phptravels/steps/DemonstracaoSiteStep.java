@@ -2,7 +2,6 @@ package br.com.phptravels.steps;
 
 import br.com.phptravels.logic.HomePageLogic;
 import br.com.phptravels.model.HomePageModel;
-import br.com.phptravels.pages.PageObjectManager;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
@@ -13,7 +12,8 @@ public class DemonstracaoSiteStep {
 
 	@Dado("que estou na página inicial")
 	public void que_estou_na_página_inicial() {
-		PageObjectManager.getHomePage().navegarParaPaginaInicial();
+		home = new HomePageLogic();
+		home.navegarParaPaginaInicial();
 	}
 
 	@Quando("preencho o campo nome")

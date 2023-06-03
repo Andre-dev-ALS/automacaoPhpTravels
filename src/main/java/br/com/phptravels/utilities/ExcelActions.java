@@ -3,91 +3,79 @@ package br.com.phptravels.utilities;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.InvalidArgumentException;
 
 import br.com.phptravels.managers.FileReaderManager;
-import br.com.phptravels.utilities.exceptions.ArgumentoinvalidoException;
 
 public class ExcelActions {
 
-	private static XSSFWorkbook PASTA_DE_TRABALHO;
-	private static XSSFSheet FOLHA;
-	private static XSSFCell CELULA;
-	private String nomeDaPlanilha = "";
+	private static XSSFWorkbook workFolder;
+	private static XSSFSheet sheet;
+	private static XSSFCell cell;
+	private String worksheetName = "";
 
-	public void setArquivoExcel(String nomeDaPlanilha) {
+	private void setExcelFile(String worksheetName) {
 		try {
-			File arquivo = new File(FileReaderManager.getInstance().getConfigReader().getExcelPath());
-			PASTA_DE_TRABALHO = new XSSFWorkbook(arquivo);
+			File file = new File(FileReaderManager.getInstance().getConfigReader().getExcelPath());
+			workFolder = new XSSFWorkbook(file);
 		} catch (IOException | InvalidFormatException e) {
-			System.out.println("pasta de trabalho não encontrada.");
+			System.out.println("workbook not found");
 			e.printStackTrace();
 		}
-		FOLHA = PASTA_DE_TRABALHO.getSheet(nomeDaPlanilha);
+		sheet = workFolder.getSheet(worksheetName);
 		try {
-			PASTA_DE_TRABALHO.close();
+			workFolder.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("erro ao fechar o excel");
+			System.out.println("error when trying to close excel");
 		}
-
 	}
 
-	public int encontrarColuna(String nomeDaColuna) throws ArgumentoinvalidoException {
-		setArquivoExcel(nomeDaPlanilha);
-		int cellcount = FOLHA.getRow(0).getLastCellNum();
-		for (int indiceColuna = 0; indiceColuna < cellcount; indiceColuna++) {
-			String atributo = getValorDaCelulaDoArquivo(0, indiceColuna);
-			if (atributo.equalsIgnoreCase(nomeDaColuna)) {
-				return indiceColuna;
+	private int findColumn(String columnName) {
+		setExcelFile(worksheetName);
+		int cellcount = sheet.getRow(0).getLastCellNum();
+		for (int indexColumn = 0; indexColumn < cellcount; indexColumn++) {
+			String attribute = getFileCellValue(0, indexColumn);
+			if (attribute.equalsIgnoreCase(columnName)) {
+				return indexColumn;
 			}
 		}
-		throw new ArgumentoinvalidoException(nomeDaColuna);
+		throw new InvalidArgumentException("O argumento" + columnName + "não existe ");
 	}
 
-	public String getValorDaCelulaDoArquivo(int iNumeroDaLinha, int iNumeroDaCelula) {
-		try {
-			setArquivoExcel(nomeDaPlanilha);
-			if (FOLHA.getRow(iNumeroDaLinha).getCell(iNumeroDaCelula) != null) {
-				CELULA = FOLHA.getRow(iNumeroDaLinha).getCell(iNumeroDaCelula);
-				return CELULA.getStringCellValue();
-			}
-		} catch (Exception e) {
-			try {
-				PASTA_DE_TRABALHO.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-				System.out.println("Erro ao fechar o excel");
-			}
+	private String getFileCellValue(int lineNumber, int icellNumber) {
+		setExcelFile(worksheetName);
+		if (sheet.getRow(lineNumber).getCell(icellNumber) != null) {
+			cell = sheet.getRow(lineNumber).getCell(icellNumber);
+			return cell.getStringCellValue();
 		}
-		return "esta célula está vazia";
+		throw new NullPointerException("returned an empty cell");
 	}
 
-	public String buscarValorNaPlanilha(String nomeDaPlanilha, String id, String nomeDaColuna)
-			throws NullArgumentException {
-		this.nomeDaPlanilha = nomeDaPlanilha;
-		setArquivoExcel(this.nomeDaPlanilha);
-		int col = encontrarColuna(nomeDaColuna);
+	public String getValueInTheWorksheet(String worksheetName, String id, String columnName) {
+		this.worksheetName = worksheetName;
+		setExcelFile(this.worksheetName);
+		int col = findColumn(columnName);
 		String dadoProcurado = id;
 		String dadoEncontrado = "";
 		int indiceId = 0;
-		for (; indiceId <= getTotalLinhasFolha(); indiceId++) {
-			dadoEncontrado = getValorDaCelulaDoArquivo(indiceId, 0);
+		for (; indiceId <= getTotalRows(); indiceId++) {
+			dadoEncontrado = getFileCellValue(indiceId, 0);
 			if (dadoEncontrado.equalsIgnoreCase(dadoProcurado)) {
-				return getValorDaCelulaDoArquivo(indiceId, col);
+				dadoEncontrado = getFileCellValue(indiceId, col);
 			}
+
 		}
-		throw new NullArgumentException();
+		return dadoEncontrado;
 	}
 
-	public int getTotalLinhasFolha() {
-		setArquivoExcel(nomeDaPlanilha);
-		int totalDeLinhas = FOLHA.getLastRowNum() - FOLHA.getFirstRowNum();
-		return totalDeLinhas;
+	public int getTotalRows() {
+		setExcelFile(worksheetName);
+		int totalRows = sheet.getLastRowNum() - sheet.getFirstRowNum();
+		return totalRows;
 	}
-
 }

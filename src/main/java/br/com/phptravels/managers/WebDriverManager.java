@@ -11,68 +11,66 @@ import br.com.phptravels.enums.DriverType;
 import br.com.phptravels.enums.EnvironmentType;
 
 public class WebDriverManager {
-	private static WebDriverManager WEB_DRIVER_MANAGER = new WebDriverManager();
-	private static WebDriver DRIVER;
-	private static DriverType DRIVER_TYPE;
-	private static EnvironmentType ENVIRONMENT_TYPE;
+	private WebDriver driver;
+	private static DriverType driverType;
+	private static EnvironmentType environmentType;
 	private static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
 
-	private WebDriverManager() {
-		DRIVER_TYPE = FileReaderManager.getInstance().getConfigReader().getBrowser();
-		ENVIRONMENT_TYPE = FileReaderManager.getInstance().getConfigReader().getEnvironment();
+	public WebDriverManager() {
+		driverType = FileReaderManager.getInstance().getConfigReader().getBrowser();
+		environmentType = FileReaderManager.getInstance().getConfigReader().getEnvironment();
 	}
 
-	public static WebDriverManager getWebDriverManager() {
-		return WEB_DRIVER_MANAGER;
+	public WebDriver getDriver() {
+
+		if (driver == null) {
+			driver = createDriver();
+		}
+		return driver;
 	}
 
-	public static WebDriver getDriver() {
-		if (DRIVER == null)
-			DRIVER = createDriver();
-		return DRIVER;
-	}
-
-	private static WebDriver createDriver() {
-		switch (ENVIRONMENT_TYPE) {
+	private WebDriver createDriver() {
+		switch (environmentType) {
 		case LOCAL:
-			DRIVER = createLocalDriver();
+			driver = createLocalDriver();
 			break;
 		case REMOTE:
-			DRIVER = createRemoteDriver();
+			driver = createRemoteDriver();
 			break;
 		}
-		return DRIVER;
+		return driver;
 	}
 
-	private static WebDriver createRemoteDriver() {
+	private WebDriver createRemoteDriver() {
 		throw new RuntimeException("RemoteWebDriver is not yet implemented");
 	}
 
-	private static WebDriver createLocalDriver() {
-		switch (DRIVER_TYPE) {
+	private WebDriver createLocalDriver() {
+		switch (driverType) {
 		case FIREFOX:
-			DRIVER = new FirefoxDriver();
+			driver = new FirefoxDriver();
 			break;
 		case CHROME:
 			System.setProperty(CHROME_DRIVER_PROPERTY,
 					FileReaderManager.getInstance().getConfigReader().getDriverPath());
-			DRIVER = new ChromeDriver();
+			driver = new ChromeDriver();
 			break;
 		case INTERNETEXPLORER:
-			DRIVER = new InternetExplorerDriver();
+			driver = new InternetExplorerDriver();
 			break;
 		}
 
-		if (FileReaderManager.getInstance().getConfigReader().getBrowserWindowSize())
-			DRIVER.manage().window().maximize();
-		DRIVER.manage().timeouts().implicitlyWait(FileReaderManager.getInstance().getConfigReader().getImplicitlyWait(),
+		if (FileReaderManager.getInstance().getConfigReader().getBrowserWindowSize()) {
+			driver.manage().window().maximize();
+		}
+		driver.manage().timeouts().implicitlyWait(FileReaderManager.getInstance().getConfigReader().getImplicitlyWait(),
 				TimeUnit.SECONDS);
-		return DRIVER;
+		return driver;
 	}
 
-	public static void closeDriver() {
-		DRIVER.close();
-		DRIVER.quit();
+	public void closeDriver() {
+		driver.close();
+		driver.quit();
 	}
 
 }

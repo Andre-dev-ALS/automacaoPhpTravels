@@ -1,6 +1,6 @@
 package br.com.phptravels.managers;
 
-import br.com.phptravels.dataProvider.ConfigFileReader;
+import br.com.phptravels.data_provider.ConfigFileReader;
 
 public class FileReaderManager {
 

@@ -1,33 +1,48 @@
 package br.com.phptravels.logic;
 
+import static br.com.phptravels.utilities.Context.getWait;
+import static br.com.phptravels.utilities.Context.getWebActions;
+import static br.com.phptravels.utilities.Context.getWebDriverManager;
+
 import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
 
+import br.com.phptravels.managers.FileReaderManager;
 import br.com.phptravels.pages.HomePage;
-import br.com.phptravels.utilities.Dsl;
-import br.com.phptravels.utilities.Espera;
+import br.com.phptravels.utilities.WaitActions;
+import br.com.phptravels.utilities.WebActions;
 
-public class HomePageLogic extends Dsl {
-
+public class HomePageLogic {
+	private WebDriver driver;
+	private WaitActions espera;
+	private WebActions acaoWeb;
 	private HomePage home;
 
 	public HomePageLogic() {
-		home = new HomePage();
+		driver = getWebDriverManager().getDriver();
+		espera = getWait();
+		acaoWeb = getWebActions();
+		home = new HomePage(driver);
+	}
+
+	public void navegarParaPaginaInicial() {
+		driver.get(FileReaderManager.getInstance().getConfigReader().getApplicationUrl());
 	}
 
 	public void preencherCampoNome(String nome) {
-		escrever(home.getTxtNome(), nome);
+		acaoWeb.escrever(home.getTxtNome(), nome, 0);
 	}
 
 	public void preencherCampoSobrenome(String sobrenome) {
-		escrever(home.getTxtSobreNome(), sobrenome);
+		acaoWeb.escrever(home.getTxtSobreNome(), sobrenome);
 	}
 
 	public void preencherCampoNomeDaEmpresa(String nomeDaEmpresa) {
-		escrever(home.getTxtNomeDaEmpresa(), nomeDaEmpresa);
+		acaoWeb.escrever(home.getTxtNomeDaEmpresa(), nomeDaEmpresa);
 	}
 
 	public void preencherCampoEmail(String email) {
-		escrever(home.getTxtEmail(), email);
+		acaoWeb.escrever(home.getTxtEmail(), email);
 	}
 
 	public void preencherCampoResultado() {
@@ -35,15 +50,15 @@ public class HomePageLogic extends Dsl {
 		int valor2 = Integer.parseInt(home.getTempValor2().getText());
 		String resultado = Integer.toString(valor1 + valor2);
 
-		escrever(home.getTxtResultado(), resultado);
+		acaoWeb.escrever(home.getTxtResultado(), resultado);
 	}
 
 	public void clicarBotaoEnviar() {
-		clicarBotao(home.getBtmEnviar());
+		acaoWeb.clicarBotao(home.getBtmEnviar(), 0);
 	}
 
 	public void getMensagemSucesso() {
-		Espera.esperarElementoSerVisivel(home.getLblMensagemBemSucedida());
+		espera.waitForElementToBeVisible(home.getLblMensagemBemSucedida(), 2);
 		Assert.assertTrue(home.getLblMensagemBemSucedida().isDisplayed());
 	}
 

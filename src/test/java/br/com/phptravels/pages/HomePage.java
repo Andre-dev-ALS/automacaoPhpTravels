@@ -1,14 +1,15 @@
 package br.com.phptravels.pages;
 
+import static br.com.phptravels.utilities.Context.getWebDriverManager;
+
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import br.com.phptravels.managers.FileReaderManager;
-import br.com.phptravels.managers.WebDriverManager;
-import br.com.phptravels.utilities.Dsl;
+public class HomePage {
+	WebDriver driver;
 
-public class HomePage extends Dsl {
 	@FindBy(xpath = "//input[@name='first_name' and @placeholder='First Name']")
 	private WebElement txtNome;
 
@@ -36,12 +37,9 @@ public class HomePage extends Dsl {
 	@FindBy(xpath = "//strong[contains(text(), 'Thank you!')]")
 	private WebElement lblMensagemBemSucedida;
 
-	public HomePage() {
-		PageFactory.initElements(WebDriverManager.getDriver(), this);
-	}
-
-	public void navegarParaPaginaInicial() {
-		WebDriverManager.getDriver().get(FileReaderManager.getInstance().getConfigReader().getApplicationUrl());
+	public HomePage(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(getWebDriverManager().getDriver(), this);
 	}
 
 	public WebElement getTxtNome() {
