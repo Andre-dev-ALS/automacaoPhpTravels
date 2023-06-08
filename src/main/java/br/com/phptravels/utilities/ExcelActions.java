@@ -1,42 +1,43 @@
 package br.com.phptravels.utilities;
 
-import java.io.File;
-import java.io.IOException;
+import static br.com.phptravels.utilities.Context.getId;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import java.io.File;
+
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.InvalidArgumentException;
-
-import br.com.phptravels.managers.FileReaderManager;
 
 public class ExcelActions {
 
 	private static XSSFWorkbook workFolder;
 	private static XSSFSheet sheet;
 	private static XSSFCell cell;
-	private String worksheetName = "";
 
-	private void setExcelFile(String worksheetName) {
+	public ExcelActions(String pathWorkFolder, String worksheetName) {
+		setExcelFile(pathWorkFolder, worksheetName);
+	}
+
+	private void setExcelFile(String pathWorkFolder, String worksheetName) {
 		try {
-			File file = new File(FileReaderManager.getInstance().getConfigReader().getExcelPath());
+			File file = new File(pathWorkFolder);
 			workFolder = new XSSFWorkbook(file);
-		} catch (IOException | InvalidFormatException e) {
-			System.out.println("workbook not found");
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new RuntimeException("workbook not found, check the specified path", e);
 		}
-		sheet = workFolder.getSheet(worksheetName);
+
 		try {
-			workFolder.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("error when trying to close excel");
+			sheet = workFolder.getSheet(worksheetName);
+
+			if (sheet.equals(null)) {
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("worksheet not found , check the specified name", e);
 		}
 	}
 
 	private int findColumn(String columnName) {
-		setExcelFile(worksheetName);
 		int cellcount = sheet.getRow(0).getLastCellNum();
 		for (int indexColumn = 0; indexColumn < cellcount; indexColumn++) {
 			String attribute = getFileCellValue(0, indexColumn);
@@ -44,11 +45,10 @@ public class ExcelActions {
 				return indexColumn;
 			}
 		}
-		throw new InvalidArgumentException("O argumento" + columnName + "não existe ");
+		throw new InvalidArgumentException("the argument" + columnName + "not exist");
 	}
 
 	private String getFileCellValue(int lineNumber, int icellNumber) {
-		setExcelFile(worksheetName);
 		if (sheet.getRow(lineNumber).getCell(icellNumber) != null) {
 			cell = sheet.getRow(lineNumber).getCell(icellNumber);
 			return cell.getStringCellValue();
@@ -56,26 +56,34 @@ public class ExcelActions {
 		throw new NullPointerException("returned an empty cell");
 	}
 
-	public String getValueInTheWorksheet(String worksheetName, String id, String columnName) {
-		this.worksheetName = worksheetName;
-		setExcelFile(this.worksheetName);
+	public String getValueInTheWorksheet(String id, String columnName) {
 		int col = findColumn(columnName);
-		String dadoProcurado = id;
-		String dadoEncontrado = "";
-		int indiceId = 0;
-		for (; indiceId <= getTotalRows(); indiceId++) {
-			dadoEncontrado = getFileCellValue(indiceId, 0);
-			if (dadoEncontrado.equalsIgnoreCase(dadoProcurado)) {
-				dadoEncontrado = getFileCellValue(indiceId, col);
+		String searchData = id;
+		String dataFound = "";
+		int indexId = 0;
+		for (; indexId <= getTotalRows(); indexId++) {
+			dataFound = getFileCellValue(indexId, 0);
+			if (dataFound.equalsIgnoreCase(searchData)) {
+				dataFound = getFileCellValue(indexId, col);
 			}
-
 		}
-		return dadoEncontrado;
+		return dataFound;
 	}
 
-	public int getTotalRows() {
-		setExcelFile(worksheetName);
+	public String getValueInTheWorksheet(String columnName) {
+		return getValueInTheWorksheet(getId(), columnName);
+	}
+
+	private int getTotalRows() {
 		int totalRows = sheet.getLastRowNum() - sheet.getFirstRowNum();
 		return totalRows;
+	}
+
+	public void closeExcel() {
+		try {
+			workFolder.close();
+		} catch (Exception e) {
+			throw new RuntimeException("error when trying to close excel");
+		}
 	}
 }
