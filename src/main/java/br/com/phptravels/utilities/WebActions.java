@@ -20,303 +20,312 @@ public class WebActions {
 
 	/********* TextField e TextArea ************/
 
-	public void escrever(WebElement elemento, String texto, int tempoDeEspera) {
-		wait.waitForElementToBeVisible(elemento, tempoDeEspera);
-		elemento.clear();
-		elemento.sendKeys(texto);
+	public void write(WebElement element, String texto, int waitingTime) {
+		wait.waitForElementToBeVisible(element, waitingTime);
+		element.clear();
+		element.sendKeys(texto);
 	}
 
-	public void escrever(WebElement elemento, String texto) {
-		escrever(elemento, texto, WaitActions.STANDARD_TIME);
+	public void write(WebElement element, String text) {
+		write(element, text, WaitActions.STANDARD_TIME);
 	}
 
-	public void escrever(By by, String texto, int tempoDeEspera) {
-		wait.waitForElementToBeVisible(by, tempoDeEspera);
+	public void write(By by, String text, int waitingTime) {
+		wait.waitForElementToBeVisible(by, waitingTime);
 		driver.findElement(by).clear();
-		driver.findElement(by).sendKeys(texto);
+		driver.findElement(by).sendKeys(text);
 	}
 
-	public void escrever(By by, String texto) {
-		escrever(by, texto, WaitActions.STANDARD_TIME);
+	public void write(By by, String text) {
+		write(by, text, WaitActions.STANDARD_TIME);
 	}
 
 	/********* Radio e Check ************/
 
-	public void clicarRadio(WebElement elemento, int tempoDeEspera) {
-		wait.waitButtonBeClickable(elemento, tempoDeEspera);
-		elemento.click();
+	public void clickRadioButton(WebElement element, int waitingTime) {
+		wait.waitButtonBeClickable(element, waitingTime);
+		element.click();
 	}
 
-	public void clicarRadio(WebElement element) {
-		clicarRadio(element, WaitActions.STANDARD_TIME);
+	public void clickRadioButton(WebElement element) {
+		clickRadioButton(element, WaitActions.STANDARD_TIME);
 	}
 
-	public void clicarRadio(By by, int tempoDeEspera) {
-		wait.waitButtonBeClickable(by, tempoDeEspera);
+	public void clickRadioButton(By by, int waitingTime) {
+		wait.waitButtonBeClickable(by, waitingTime);
 		driver.findElement(by).click();
 	}
 
-	public void clicarRadio(By by) {
-		clicarRadio(by, WaitActions.STANDARD_TIME);
+	public void clickRadioButton(By by) {
+		clickRadioButton(by, WaitActions.STANDARD_TIME);
 	}
 
-	public void clicarCheck(By by, int tempoDeEspera) {
-		wait.waitButtonBeClickable(by, tempoDeEspera);
+	public void clickCheckButton(WebElement element, int waitingTime) {
+		wait.waitButtonBeClickable(element, waitingTime);
+		element.click();
+	}
+
+	public void clickCheckButton(WebElement element) {
+		clickCheckButton(element, WaitActions.STANDARD_TIME);
+	}
+
+	public void clickCheckButton(By by, int waitingTime) {
+		wait.waitButtonBeClickable(by, waitingTime);
 		driver.findElement(by).click();
 	}
 
 	public void clicarCheck(By by) {
-		clicarCheck(by, WaitActions.STANDARD_TIME);
+		clickCheckButton(by, WaitActions.STANDARD_TIME);
 	}
 
-// caixa de seleção 
+// selection box
 
-	public void selecionar(WebElement elemento, String valor, int tempoDeEspera) {
-		wait.waitForElementToBeVisible(elemento, tempoDeEspera);
-		Select selecao = new Select(elemento);
-		selecao.selectByVisibleText(valor);
+	public void select(WebElement element, String value, int tempoDeEspera) {
+		wait.waitForElementToBeVisible(element, tempoDeEspera);
+		Select selection = new Select(element);
+		selection.selectByVisibleText(value);
 	}
 
-	public void selecionar(WebElement element, String valor) {
-		selecionar(element, valor, WaitActions.STANDARD_TIME);
+	public void select(WebElement element, String value) {
+		select(element, value, WaitActions.STANDARD_TIME);
 	}
 
-	public void selecionar(By by, String valor, int tempoDeEspera) {
-		wait.waitForElementToBeVisible(by, tempoDeEspera);
+	public void select(By by, String value, int waitingTime) {
+		wait.waitForElementToBeVisible(by, waitingTime);
 		WebElement element = driver.findElement(by);
-		Select selecao = new Select(element);
-		selecao.selectByVisibleText(valor);
+		Select selection = new Select(element);
+		selection.selectByVisibleText(value);
 	}
 
-	public void selecionar(By by, String valor) {
-		selecionar(by, valor, WaitActions.STANDARD_TIME);
+	public void select(By by, String value) {
+		select(by, value, WaitActions.STANDARD_TIME);
 	}
 
 	/********* Combo ************/
 
-	public void selecionarCombo(WebElement elemento, String valor, int tempoDeEspera) {
-		wait.waitForElementToBeVisible(elemento, tempoDeEspera);
-		Select combo = new Select(elemento);
-		combo.selectByVisibleText(valor);
+	public void selectCombo(WebElement element, String value, int waitingTime) {
+		wait.waitForElementToBeVisible(element, waitingTime);
+		Select combo = new Select(element);
+		combo.selectByVisibleText(value);
 	}
 
-	public void selecionarCombo(WebElement elemento, String valor) {
-		selecionarCombo(elemento, valor, WaitActions.STANDARD_TIME);
+	public void selectCombo(WebElement element, String value) {
+		selectCombo(element, value, WaitActions.STANDARD_TIME);
 	}
 
-	public void deselecionarCombo(WebElement elemento, String valor, int tempoDeEspera) {
-		wait.waitForElementToBeVisible(elemento, tempoDeEspera);
-		Select combo = new Select(elemento);
-		combo.deselectByVisibleText(valor);
-	}
-
-	public void deselecionarCombo(WebElement elemento, String valor) {
-		deselecionarCombo(elemento, valor, WaitActions.STANDARD_TIME);
-	}
-
-	public String obterValorCombo(WebElement elemento, int tempoDeEspera) {
-		wait.waitForElementToBeVisible(elemento, tempoDeEspera);
-		Select combo = new Select(elemento);
-		return combo.getFirstSelectedOption().getText();
-	}
-
-	public String obterValorCombo(WebElement elemento) {
-		return obterValorCombo(elemento, WaitActions.STANDARD_TIME);
-	}
-
-	public void selecionarCombo(By by, String valor, int tempoDeEspera) {
-		wait.waitForElementToBeVisible(by, tempoDeEspera);
+	public void selectCombo(By by, String value, int waitingTime) {
+		wait.waitForElementToBeVisible(by, waitingTime);
 		WebElement element = driver.findElement(by);
 		Select combo = new Select(element);
-		combo.selectByVisibleText(valor);
+		combo.selectByVisibleText(value);
 	}
 
-	public void selecionarCombo(By by, String valor) {
-		selecionarCombo(by, valor, WaitActions.STANDARD_TIME);
+	public void selectCombo(By by, String value) {
+		selectCombo(by, value, WaitActions.STANDARD_TIME);
 	}
 
-	public void deselecionarCombo(By by, String valor, int tempoDeEspera) {
-		wait.waitForElementToBeVisible(by, tempoDeEspera);
+	public void deselectCombo(WebElement element, String value, int waitingTime) {
+		wait.waitForElementToBeVisible(element, waitingTime);
+		Select combo = new Select(element);
+		combo.deselectByVisibleText(value);
+	}
+
+	public void deselectCombo(WebElement element, String value) {
+		deselectCombo(element, value, WaitActions.STANDARD_TIME);
+	}
+
+	public void deselectCombo(By by, String value, int waitingTime) {
+		wait.waitForElementToBeVisible(by, waitingTime);
 		WebElement element = driver.findElement(by);
 		Select combo = new Select(element);
-		combo.deselectByVisibleText(valor);
+		combo.deselectByVisibleText(value);
 	}
 
-	public void deselecionarCombo(By by, String valor) {
-		deselecionarCombo(by, valor, WaitActions.STANDARD_TIME);
+	public void deselectCombo(By by, String value) {
+		deselectCombo(by, value, WaitActions.STANDARD_TIME);
 	}
 
-	public String obterValorCombo(By by, int tempoDeEspera) {
-		wait.waitForElementToBeVisible(by, tempoDeEspera);
-		WebElement element = driver.findElement(by);
+	public String getComboValue(WebElement element, int waitingTime) {
+		wait.waitForElementToBeVisible(element, waitingTime);
 		Select combo = new Select(element);
 		return combo.getFirstSelectedOption().getText();
 	}
 
-	public String obterValorCombo(By by) {
-		return obterValorCombo(by, WaitActions.STANDARD_TIME);
+	public String getComboValue(WebElement element) {
+		return getComboValue(element, WaitActions.STANDARD_TIME);
+	}
+
+	public String getComboValue(By by, int waitingTime) {
+		wait.waitForElementToBeVisible(by, waitingTime);
+		WebElement element = driver.findElement(by);
+		Select combo = new Select(element);
+		return combo.getFirstSelectedOption().getText();
+	}
+
+	public String getComboValue(By by) {
+		return getComboValue(by, WaitActions.STANDARD_TIME);
 	}
 
 	/********* Botao ************/
 
-	public void clicarBotao(WebElement elemento, int tempoDeEspera) {
-		wait.waitButtonBeClickable(elemento, tempoDeEspera);
-		elemento.click();
+	public void clickButton(WebElement element, int waitingTime) {
+		wait.waitButtonBeClickable(element, waitingTime);
+		element.click();
 	}
 
-	public void clicarBotao(WebElement elemento) {
-		clicarBotao(elemento, WaitActions.STANDARD_TIME);
+	public void clickButton(WebElement element) {
+		clickButton(element, WaitActions.STANDARD_TIME);
 	}
 
-	public String obterValueElemento(WebElement elemento, int tempoDeEspera) {
-		wait.waitButtonBeClickable(elemento, tempoDeEspera);
-		return elemento.getAttribute("value");
-	}
-
-	public String obterValueElemento(WebElement elemento) {
-		return obterValueElemento(elemento, WaitActions.STANDARD_TIME);
-	}
-
-	public void clicarBotao(By by, int tempoDeEspera) {
-		wait.waitButtonBeClickable(by, tempoDeEspera);
+	public void clickButton(By by, int waitingTime) {
+		wait.waitButtonBeClickable(by, waitingTime);
 		WebElement element = driver.findElement(by);
 		element.click();
 	}
 
-	public void clicarBotao(By by) {
-		clicarBotao(by, WaitActions.STANDARD_TIME);
+	public void clickButton(By by) {
+		clickButton(by, WaitActions.STANDARD_TIME);
 	}
 
-	public String obterValueElemento(By by, int tempoDeEspera) {
-		wait.waitButtonBeClickable(by, tempoDeEspera);
+	public String getElementValue(WebElement element, int waitingTime) {
+		wait.waitButtonBeClickable(element, waitingTime);
+		return element.getAttribute("value");
+	}
+
+	public String getElementValue(WebElement element) {
+		return getElementValue(element, WaitActions.STANDARD_TIME);
+	}
+
+	public String getElementValue(By by, int waitingTime) {
+		wait.waitButtonBeClickable(by, waitingTime);
 		WebElement element = driver.findElement(by);
 		return element.getAttribute("value");
 	}
 
-	public String obterValueElemento(By by) {
-		return obterValueElemento(by, WaitActions.STANDARD_TIME);
+	public String getElementValue(By by) {
+		return getElementValue(by, WaitActions.STANDARD_TIME);
 	}
 
 	/********* Link ************/
 
-	public void clicarLink(String link) {
+	public WebActions(String link) {
 		driver.findElement(By.linkText(link)).click();
 	}
 
-	public void clicarLink(By by, int waitingTime) {
+	public void clickOnLink(By by, int waitingTime) {
 		WebElement element = driver.findElement(by);
 		wait.waitForElementToBeVisible(by, waitingTime);
 		element.click();
 	}
 
-	public void clicarLink(By by) {
+	public void clickOnLink(By by) {
 
-		clicarLink(by, WaitActions.STANDARD_TIME);
+		clickOnLink(by, WaitActions.STANDARD_TIME);
 	}
 
 	/********* Alerts ************/
 
-	public String alertaObterTexto(int tempoDeEspera) {
-		wait.waitTheAlertAppear(tempoDeEspera);
+	public String getAlertText(int waitingTime) {
+		wait.waitTheAlertAppear(waitingTime);
 		Alert alert = driver.switchTo().alert();
 		return alert.getText();
 	}
 
-	public String alertaObterTexto() {
-		return alertaObterTexto(WaitActions.STANDARD_TIME);
+	public String getAlertText() {
+		return getAlertText(WaitActions.STANDARD_TIME);
 	}
 
-	public String alertaObterTextoEAceita(int tempoDeEspera) {
-		wait.waitTheAlertAppear(tempoDeEspera);
+	public String getTextAndAcceptAlert(int waitingTime) {
+		wait.waitTheAlertAppear(waitingTime);
 		Alert alert = driver.switchTo().alert();
 		String valor = alert.getText();
 		alert.accept();
 		return valor;
 	}
 
-	public String alertaObterTextoEAceita() {
-		return alertaObterTextoEAceita(WaitActions.STANDARD_TIME);
+	public String getTextAndAcceptAlert() {
+		return getTextAndAcceptAlert(WaitActions.STANDARD_TIME);
 	}
 
-	public String alertaObterTextoENega(int tempoDeEspera) {
-		wait.waitTheAlertAppear(tempoDeEspera);
+	public String getTextAndDenyAlert(int waitingTime) {
+		wait.waitTheAlertAppear(waitingTime);
 		Alert alert = driver.switchTo().alert();
 		String valor = alert.getText();
 		alert.dismiss();
 		return valor;
 	}
 
-	public String alertaObterTextoENega() {
-		return alertaObterTextoENega(WaitActions.STANDARD_TIME);
+	public String getTextAndDenyAlert() {
+		return getTextAndDenyAlert(WaitActions.STANDARD_TIME);
 	}
 
-	public void alertaEscrever(String texto, int tempoDeEspera) {
-		wait.waitTheAlertAppear(tempoDeEspera);
+	public void writeNoAlert(String text, int waitingTime) {
+		wait.waitTheAlertAppear(waitingTime);
 		Alert alert = driver.switchTo().alert();
-		alert.sendKeys(texto);
+		alert.sendKeys(text);
 		alert.accept();
 	}
 
-	public void alertaEscrever(String texto) {
-		alertaEscrever(texto, WaitActions.STANDARD_TIME);
+	public void writeNoAlert(String text) {
+		writeNoAlert(text, WaitActions.STANDARD_TIME);
+	}
+//window
+
+	public void switchWindow(int numberWindow) {
+		driver.switchTo().window((String) driver.getWindowHandles().toArray()[numberWindow]);
 	}
 
-	public void trocarJanela(int numeroJanela) {
-		driver.switchTo().window((String) driver.getWindowHandles().toArray()[numeroJanela]);
+	// frame
+
+	public void enterFrame(By by) {
+		WebElement element = driver.findElement(by);
+		driver.switchTo().frame(element);
+	}
+
+	public void exitFrame() {
+		driver.switchTo().defaultContent();
 	}
 
 	/************** JS *********************/
 
-	public Object executarJS(String cmd, Object... param) {
+	public Object executeJs(String cmd, Object... param) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		return js.executeScript(cmd, param);
 	}
 
-	/************** Tabela *********************/
+	// table
 
-	public WebElement obterCelula(String colunaBusca, String valor, String colunaBotao, String idTabela) {
-		// procurar coluna do registro
-		WebElement tabela = driver.findElement(By.xpath("//*[@id='" + idTabela + "']"));
-		int idColuna = obterIndiceColuna(colunaBusca, tabela);
+	public WebElement getCell(String column, String value, By by) {
+		WebElement table = driver.findElement(by);
+		int indexColumn = getIndexColumn(column, table);
 
-		// encontrar a linha do registro
-		int idLinha = obterIndiceLinha(valor, tabela, idColuna);
+		int row = getIndexRow(value, table, indexColumn);
 
-		// procurar coluna do botao
-		int idColunaBotao = obterIndiceColuna(colunaBotao, tabela);
-
-		// clicar no botao da celula encontrada
-		WebElement celula = tabela.findElement(By.xpath(".//tr[" + idLinha + "]/td[" + idColunaBotao + "]"));
-		return celula;
+		WebElement cell = table.findElement(By.xpath(".//tr[" + row + "]/td[" + indexColumn + "]"));
+		return cell;
 	}
 
-	public void clicarBotaoTabela(String colunaBusca, String valor, String colunaBotao, String idTabela) {
-		WebElement celula = obterCelula(colunaBusca, valor, colunaBotao, idTabela);
-		celula.findElement(By.xpath(".//input")).click();
-
-	}
-
-	protected int obterIndiceLinha(String valor, WebElement tabela, int idColuna) {
-		List<WebElement> linhas = tabela.findElements(By.xpath("./tbody/tr/td[" + idColuna + "]"));
-		int idLinha = -1;
-		for (int i = 0; i < linhas.size(); i++) {
-			if (linhas.get(i).getText().equals(valor)) {
-				idLinha = i + 1;
+	private int getIndexRow(String value, WebElement table, int column) {
+		List<WebElement> rows = table.findElements(By.xpath("./tbody/tr/td[" + column + "]"));
+		int row = -1;
+		for (int i = 0; i < rows.size(); i++) {
+			if (rows.get(i).getText().equals(value)) {
+				row = i + 1;
 				break;
 			}
 		}
-		return idLinha;
+		return row;
 	}
 
-	protected int obterIndiceColuna(String coluna, WebElement tabela) {
-		List<WebElement> colunas = tabela.findElements(By.xpath(".//th"));
-		int idColuna = -1;
-		for (int i = 0; i < colunas.size(); i++) {
-			if (colunas.get(i).getText().equals(coluna)) {
-				idColuna = i + 1;
+	private int getIndexColumn(String column, WebElement table) {
+		List<WebElement> columns = table.findElements(By.xpath(".//th"));
+		int idColumn = -1;
+		for (int i = 0; i < columns.size(); i++) {
+			if (columns.get(i).getText().equals(idColumn)) {
+				idColumn = i + 1;
 				break;
 			}
 		}
-		return idColuna;
+		return idColumn;
 	}
 }

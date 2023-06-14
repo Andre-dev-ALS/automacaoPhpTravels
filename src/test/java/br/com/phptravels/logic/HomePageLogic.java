@@ -30,19 +30,19 @@ public class HomePageLogic {
 	}
 
 	public void preencherCampoNome(String nome) {
-		acaoWeb.escrever(home.getTxtNome(), nome, 0);
+		acaoWeb.write(home.getTxtNome(), nome, 0);
 	}
 
 	public void preencherCampoSobrenome(String sobrenome) {
-		acaoWeb.escrever(home.getTxtSobreNome(), sobrenome);
+		acaoWeb.write(home.getTxtSobreNome(), sobrenome);
 	}
 
 	public void preencherCampoNomeDaEmpresa(String nomeDaEmpresa) {
-		acaoWeb.escrever(home.getTxtNomeDaEmpresa(), nomeDaEmpresa);
+		acaoWeb.write(home.getTxtNomeDaEmpresa(), nomeDaEmpresa);
 	}
 
 	public void preencherCampoEmail(String email) {
-		acaoWeb.escrever(home.getTxtEmail(), email);
+		acaoWeb.write(home.getTxtEmail(), email);
 	}
 
 	public void preencherCampoResultado() {
@@ -50,11 +50,11 @@ public class HomePageLogic {
 		int valor2 = Integer.parseInt(home.getTempValor2().getText());
 		String resultado = Integer.toString(valor1 + valor2);
 
-		acaoWeb.escrever(home.getTxtResultado(), resultado);
+		acaoWeb.write(home.getTxtResultado(), resultado);
 	}
 
 	public void clicarBotaoEnviar() {
-		acaoWeb.clicarBotao(home.getBtmEnviar(), 0);
+		acaoWeb.clickButton(home.getBtmEnviar(), 0);
 	}
 
 	public void getMensagemSucesso() {

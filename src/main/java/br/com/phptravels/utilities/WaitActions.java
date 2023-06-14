@@ -14,7 +14,6 @@ public class WaitActions {
 	public static final int STANDARD_TIME = 15;
 	private WebDriver driver;
 	private WebDriverWait wait;
-	private WebElement element;
 
 	public WaitActions(WebDriver driver) {
 		this.driver = driver;
@@ -55,18 +54,18 @@ public class WaitActions {
 			setWait(waitingTime);
 			getWait().until(ExpectedConditions.elementToBeClickable(element));
 		} catch (TimeoutException e) {
-
 			throw new TimeoutException("timeout passed, and the element could not be  clicked", e);
 		}
 	}
 
 	public void waitButtonBeClickable(By by, int waitingTime) {
-		setWait(waitingTime);
-		getWait().until(ExpectedConditions.elementToBeClickable(by));
-
-		if (!element.isDisplayed()) {
+		try {
+			setWait(waitingTime);
+			getWait().until(ExpectedConditions.elementToBeClickable(by));
+		} catch (TimeoutException e) {
 			throw new TimeoutException("timeout passed, and the element could not be  clicked");
 		}
+
 	}
 
 	public void waitTheAlertAppear(int waitingTime) {
