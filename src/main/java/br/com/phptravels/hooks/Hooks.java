@@ -36,7 +36,7 @@ public class Hooks {
 			mensagem = "Passou";
 		}
 		try {
-			String pastaImagens = new File("").getAbsolutePath() + "/evidencias/";
+			String pastaImagens = new File("").getAbsolutePath() + "/evidencia/";
 			FileUtils.copyFile(imagens, new File(
 					pastaImagens + Context.getId() + scenario.getName() + "-" + data + "-" + mensagem + ".png"));
 		} catch (IOException e) {

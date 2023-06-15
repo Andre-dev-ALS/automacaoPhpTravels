@@ -22,7 +22,7 @@ public class HomePageLogic {
 		driver = getWebDriverManager().getDriver();
 		espera = getWait();
 		acaoWeb = getWebActions();
-		home = new HomePage(driver);
+		home = new HomePage();
 	}
 
 	public void navegarParaPaginaInicial() {
@@ -46,8 +46,8 @@ public class HomePageLogic {
 	}
 
 	public void preencherCampoResultado() {
-		int valor1 = Integer.parseInt(home.getTempValor1().getText());
-		int valor2 = Integer.parseInt(home.getTempValor2().getText());
+		int valor1 = Integer.parseInt(home.getLblValor1().getText());
+		int valor2 = Integer.parseInt(home.getLblValor2().getText());
 		String resultado = Integer.toString(valor1 + valor2);
 
 		acaoWeb.write(home.getTxtResultado(), resultado);

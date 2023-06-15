@@ -321,7 +321,7 @@ public class WebActions {
 		List<WebElement> columns = table.findElements(By.xpath(".//th"));
 		int idColumn = -1;
 		for (int i = 0; i < columns.size(); i++) {
-			if (columns.get(i).getText().equals(idColumn)) {
+			if (columns.get(i).getText().equals(column)) {
 				idColumn = i + 1;
 				break;
 			}

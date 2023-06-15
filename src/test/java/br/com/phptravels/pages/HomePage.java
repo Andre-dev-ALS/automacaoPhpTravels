@@ -2,13 +2,11 @@ package br.com.phptravels.pages;
 
 import static br.com.phptravels.utilities.Context.getWebDriverManager;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class HomePage {
-	WebDriver driver;
 
 	@FindBy(xpath = "//input[@name='first_name' and @placeholder='First Name']")
 	private WebElement txtNome;
@@ -37,8 +35,7 @@ public class HomePage {
 	@FindBy(xpath = "//strong[contains(text(), 'Thank you!')]")
 	private WebElement lblMensagemBemSucedida;
 
-	public HomePage(WebDriver driver) {
-		this.driver = driver;
+	public HomePage() {
 		PageFactory.initElements(getWebDriverManager().getDriver(), this);
 	}
 
@@ -62,11 +59,11 @@ public class HomePage {
 		return btmEnviar;
 	}
 
-	public WebElement getTempValor1() {
+	public WebElement getLblValor1() {
 		return lblValor1;
 	}
 
-	public WebElement getTempValor2() {
+	public WebElement getLblValor2() {
 		return lblValor2;
 	}
 
