@@ -1,7 +1,5 @@
 package br.com.phptravels.utilities;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.TimeoutException;
@@ -27,9 +25,7 @@ public class WaitActions {
 		wait = new WebDriverWait(driver, waitingTime);
 	}
 
-	public void waitPageLoad(int waitingTime) {
-		driver.manage().timeouts().pageLoadTimeout(waitingTime, TimeUnit.SECONDS);
-	}
+
 
 	public void waitForElementToBeVisible(WebElement webElement, int waitingTime) {
 		try {

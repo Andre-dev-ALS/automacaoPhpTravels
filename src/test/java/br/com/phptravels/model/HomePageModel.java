@@ -1,15 +1,12 @@
 package br.com.phptravels.model;
 
-import br.com.phptravels.managers.FileReaderManager;
+import static br.com.phptravels.utilities.Context.getConfigFileReader;
+
 import br.com.phptravels.utilities.ExcelActions;
 
 public class HomePageModel {
-	static final String caminhoDaPastaDeTrabalho = FileReaderManager.getInstance().getConfigReader().getExcelPath();
+	static final String CAMINHO_DA_PASTA_DE_TRABALHO = getConfigFileReader().getExcelPath();
 	static final String NOME_DA_PLANILHA = "dadosPessoais";
-	static final String COLUNA_NOME = "nome";
-	static final String COLUNA_SOBRENOME = "sobrenome";
-	static final String COLUNA_NOME_DA_EMPRESA = "nomeDaEmpresa";
-	static final String COLUNA_EMAIL = "email";
 
 	private String nome;
 	private String sobreNome;
@@ -18,11 +15,11 @@ public class HomePageModel {
 	private ExcelActions excel;
 
 	public HomePageModel() {
-		excel = new ExcelActions(caminhoDaPastaDeTrabalho, NOME_DA_PLANILHA);
-		nome = setAtributo(COLUNA_NOME);
-		sobreNome = setAtributo(COLUNA_SOBRENOME);
-		nomeDaEmpresa = setAtributo(COLUNA_NOME_DA_EMPRESA);
-		email = setAtributo(COLUNA_EMAIL);
+		excel = new ExcelActions(CAMINHO_DA_PASTA_DE_TRABALHO, NOME_DA_PLANILHA);
+		nome = setAtributo("nome");
+		sobreNome = setAtributo("sobrenome");
+		nomeDaEmpresa = setAtributo("nomeDaEmpresa");
+		email = setAtributo("email");
 		excel.closeExcel();
 	}
 

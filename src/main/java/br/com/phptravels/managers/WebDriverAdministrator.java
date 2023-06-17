@@ -1,5 +1,7 @@
 package br.com.phptravels.managers;
 
+import static br.com.phptravels.utilities.Context.getConfigFileReader;
+
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -9,16 +11,15 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import br.com.phptravels.enums.DriverType;
 import br.com.phptravels.enums.EnvironmentType;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class WebDriverManager {
+public class WebDriverAdministrator {
 	private WebDriver driver;
 	private static DriverType driverType;
 	private static EnvironmentType environmentType;
-	private static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
-
-	public WebDriverManager() {
-		driverType = FileReaderManager.getInstance().getConfigReader().getBrowser();
-		environmentType = FileReaderManager.getInstance().getConfigReader().getEnvironment();
+	public WebDriverAdministrator() {
+		driverType = getConfigFileReader().getBrowser();
+		environmentType = getConfigFileReader().getEnvironment();
 	}
 
 	public WebDriver getDriver() {
@@ -48,23 +49,23 @@ public class WebDriverManager {
 	private WebDriver createLocalDriver() {
 		switch (driverType) {
 		case FIREFOX:
+			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
 			break;
 		case CHROME:
-			System.setProperty(CHROME_DRIVER_PROPERTY,
-					FileReaderManager.getInstance().getConfigReader().getDriverPath());
+WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
 			break;
 		case INTERNETEXPLORER:
+			WebDriverManager.iedriver().setup();
 			driver = new InternetExplorerDriver();
 			break;
 		}
 
-		if (FileReaderManager.getInstance().getConfigReader().getBrowserWindowSize()) {
+		if (getConfigFileReader().getBrowserWindowSize()) {
 			driver.manage().window().maximize();
 		}
-		driver.manage().timeouts().implicitlyWait(FileReaderManager.getInstance().getConfigReader().getImplicitlyWait(),
-				TimeUnit.SECONDS);
+driver.manage().timeouts().pageLoadTimeout(getConfigFileReader().getImplicitlyWait(), TimeUnit.SECONDS);
 		return driver;
 	}
 
